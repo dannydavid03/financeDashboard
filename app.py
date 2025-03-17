@@ -302,12 +302,80 @@ fig27 = px.scatter(
 )
 
 
+fig30 = px.histogram(
+    df,
+    x="Market capitalization",
+    color="Company",
+    title="Distribution of Market Capitalization",
+    nbins=30  # Number of bins for the histogram
+)
+
+fig31 = px.pie(
+    df,
+    names="Company",
+    values="Insider ownership",
+    title="Insider Ownership Distribution",
+)
+fig31.update_traces(textinfo="none")
+
+
+fig34 = px.bar(
+    df,
+    x="Company",
+    y="Revenue (ttm)",
+    color="Company",
+    title="Revenue by Company",
+)
+
+fig35 = px.sunburst(
+    df,
+    path=["Company", "Market capitalization"],  
+    values="Market capitalization",
+    title="Sunburst Chart of Market Cap by Industry",
+)
+
+fig36 = px.treemap(
+    df,
+    path=["Company", "Market capitalization"],  # Hierarchy: Company -> Industry
+    values="Market capitalization",
+    title="Treemap of Market Capitalization by Industry",
+)
+
+
+fig39 = px.box(
+    df,
+    x="Company",
+    y="Revenue (ttm)",
+    title="Box Plot of Revenue (ttm) by Company",
+)
+fig41 = px.scatter_matrix(
+    df,
+    dimensions=["Market capitalization", "Revenue (ttm)", "Price-to-Earnings (ttm)", "Dividend yield (annual)"],
+    color="Company",
+    title="Scatter Matrix of Financial Variables",
+)
+fig44 = px.scatter_3d(
+    df,
+    x="Market capitalization",
+    y="Revenue (ttm)",
+    z="Price-to-Earnings (ttm)",
+    color="Company",
+    title="3D Scatter Plot: Market Cap vs Revenue vs P/E",
+)
+
+
+
+
+
+
+
+
+
+
 # Step 4: Create Dash App
 app = dash.Dash(__name__)
-
 app.layout = html.Div(
-    [
-        html.H1("Financial Dashboard"),
+    [html.H1("Financial Dashboard"),
         # Dropdown for selecting which chart to display
         dcc.Dropdown(
             id="chart-dropdown",
@@ -325,6 +393,17 @@ app.layout = html.Div(
                     "label": "Insider Ownership vs Institutional Ownership",
                     "value": "fig7",
                 },
+                {"label": "Revenue vs Dividend Yield (Bar)", "value": "fig28"},
+                {"label": "Market Cap vs P/E Ratio (Line)", "value": "fig29"},
+                {"label": "Distribution of Market Cap", "value": "fig30"},
+                {"label": "Insider Ownership Distribution (Pie)", "value": "fig31"},
+                {"label": "Revenue by Company", "value": "fig34"},
+                {"label": "Sunburst Chart of Market Cap", "value": "fig35"},
+                {"label": "Treemap of Market Cap", "value": "fig36"},
+                {"label": "Box Plot of Revenue", "value": "fig39"},
+                {"label": "Scatter Matrix", "value": "fig41"},
+                {"label": "3D Scatter Plot", "value": "fig44"},
+
                 {
                     "label": "Book Value per Share vs Market Capitalization",
                     "value": "fig8",
@@ -375,14 +454,14 @@ app.layout = html.Div(
                     "label": "Analysts' Mean Recommendation vs Analysts' Mean Target Price",
                     "value": "fig27",
                 },
+
             ],
             value="fig1",  # default value
             style={"width": "50%"},
         ),
         # Graph to display selected chart
-        dcc.Graph(id="graph"),
-    ]
-)
+        dcc.Graph(id="graph"),])
+       
 
 
 # Step 5: Callback to update the graph based on dropdown selection
@@ -445,7 +524,26 @@ def update_graph(selected_chart):
         return fig26
     elif selected_chart == "fig27":
         return fig27
+    elif selected_chart == "fig27":
+        return fig27
+    elif selected_chart == "fig30":
+        return fig30
+    elif selected_chart == "fig31":
+        return fig31
+    elif selected_chart == "fig34":
+        return fig34
+    elif selected_chart == "fig35":
+        return fig35
+    elif selected_chart == "fig36":
+        return fig36
+    elif selected_chart == "fig39":
+        return fig39
+    elif selected_chart == "fig41":
+        return fig41
+    elif selected_chart == "fig44":
+        return fig44
     else:
+        
         return fig1  # Default chart
 
 
