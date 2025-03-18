@@ -62,4 +62,9 @@ Once the server is running, open your browser and go to http://127.0.0.1:8050/ t
 2. Explore different plots by selecting various timeframes for stock performance (week, month, quarter, year).
 3. Hover over the data points in the visualizations to see more details about each company.
 
+### Future Improvements
+
+1. Deploy the finance dashboard online for easy visibility
+2. Use the insights from the dashboard to develop machine learning models.
+
 
